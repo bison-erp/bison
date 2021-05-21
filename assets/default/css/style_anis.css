@@ -1,0 +1,42 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2 nov. 2015, 09:19:38
+    Author     : Anis
+*/
+
+/* .modal{overflow-y:none;} */
+.modal-open .modal{height:auto!important;}
+// .modal .modal-header{position:relative!important;}
+
+.modal .modal-header {
+    border-bottom: 1px solid #EFEFEF;
+    margin-left: 6px;
+    margin-right: 6px;
+    background: #ffffff!important;
+}
+.modal-body {
+    position: relative;
+    padding: 15px;
+    max-height: 520px;
+    height:auto;
+    overflow-y: auto;
+}
+.table.table-bordered thead > tr > th{
+    border-bottom: 1px solid #ddd;
+}
+#item_table thead tr th{
+    font-size:13px;
+}
+.error_value{
+    color:#F00;
+}
+.modal-open .modal {
+    overflow-y: auto!important;
+    padding: 0!important;
+    border: none!important;
+    outline: none!important;
+}

@@ -1,0 +1,177 @@
+Bonjour,
+
+Nous vous prions de bien vouloir trouver ci-joint notre devis Nature_devis du Date_devis, relatif � : D�signation_produit de ma soci�t�
+
+Souhaitant qu'il retienne votre attention, et vous remerciant de votre confiance, nous vous en souhaitons bonne r�ception.
+
+Bien cordialement,
+
+Cordonn�_Soci�t�
+
+
+NATURE +'du '+ DATE+ ', relatif � : '+LISTE_PRODUIT+' de ma soci�t�<br><br>Souhaitant qu'il retienne votre attention, et vous remerciant de votre confiance, nous vous en souhaitons bonne r�ception.<br><br>Bien cordialement,<br><br>'
+NOM+'<br><i>'+SOCIETE+'</i><br><br></font><p><font color="#333333" face="Verdana" size="1">'+CONTACT_SOCIETE
+    
+<script>
+    $(function () {
+
+
+    body += "J'esp�re que vous allez bien.<br/><br/>";
+            body += "Je me permets de reprendre contact aujourd'hui avec vous afin de savoir si vous avez pris la d�cision concernant notre offre de prix pour la refonte de votre site.<br/><br/>";
+            body += "Je peux vous apporter mes conseils et je serai vraiment ravie d'avoir un petit retour afin de conna�tre votre avis.<br/><br/>";
+            body += "Je me propose de r�pondre � vos �ventuelles questions si vous le d�sirez.<br/><br/><br/>";
+            body += "Dans l'attente de notre prochain contact,<br/>";
+            body += "Je vous passe mes sinc�res salutations.<br/><br/>";
+            body += "Cordialement,";
+<?php
+foreach ($rappels as $rappel) {//print_r( $rappel);   
+    foreach ($quotes as $quote) {
+        if ($rappel->quote_id == $quote->quote_id) {
+            ?>
+                body = "<span class='sceditor-selection sceditor-ignore'id='sceditor-end-marker'></span><span class='sceditor-selection sceditor-ignore' id='sceditor-start-marker'> </span><span class='sceditor-selection sceditor-ignore' id='sceditor-end-marker'> </span><span class='sceditor-selection sceditor-ignore' id='sceditor-end-marker'> </span><span class='sceditor-selection sceditor-ignore' id='sceditor-end-marker'> </span><span class='sceditor-selection sceditor-ignore' id='sceditor-end-marker'> </span><p></p><div><font color='#333333' face='Verdana' size='2'>Bonjour,<br><br>Nous vous prions de bien vouloir trouver ci-joint notre devis";
+                        body += <?php echo $quote->quote_nature; ?> + "du " + <?php echo $quote->quote_date_created; ?>+ "  de ma soci�t�<br><br>Souhaitant qu'il retienne votre attention, et vous remerciant de votre confiance, nous vous en souhaitons bonne r�ception. < br > < br > Bien cordialement, < br > < br > "
+                        body +=<?php echo $model->email_template_from_name; ?>+"<br>" + <?php echo $model->email_template_from_email; ?> + "<br><i>" +<?php echo $quote->user_company; ?>+'</i><br><br></font><p><font color="#333333" face="Verdana" size="1">'+<?php echo $quote->user_address_1; ?> +"<br>"+<?php echo $quote->user_phone;?>
+                        body+="<span class='sceditor-selection sceditor-ignore' id='sceditor-end-marker'> </span><a href='http://www.novatis.tn/'></a></font></p></div>"
+                        $.post("<?php echo site_url('quote_rappel/ajax/send_quote'); ?>", {
+                        quote_id: <?php echo $rappel->quote_id; ?>,
+                                from_email: '<?php echo $model->email_template_from_email; ?>', //email user
+                                //from_name: '<?php //echo $this->session->userdata('user_name'); ?>', //name user
+                                from_name: '<?php echo $model->email_template_from_name; ?>', //name user
+                                pdf_template: '1', //Mod�le de courriel: 
+                                to: '<?php echo $rappel->client_email; ?>',
+                                subject: 'Devis# '+ <?php echo $quote->quote_number; ?> +'; '+<?php echo $quote->quote_nature; ?> + 'ma soci�t� du '+<?php echo $quote->quote_date_created; ?> ,
+                                cc: '',
+                                bcc: '',
+                        }, function (data) {
+                        var json_response = eval('(' + data + ')');
+                                //self.data('typeahead').source = json_response;
+                        });
+        <?php }
+    }
+} ?>
+    });
+</script>
+<div id="headerbar">
+    <h1></h1>
+
+    <div class="pull-right btn-group" style=" display: none">
+        <a href="#" class="btn btn-sm btn-success" id="btn_save_quote">
+            <i class="fa fa-check"></i>
+    <?php echo lang('save'); ?>
+        </a>
+    </div>
+    <?php
+//print_r( $this->session->userdata); 
+//echo '<pre>';
+    //print_r($this->session->all_userdata());
+    //echo '</pre>';die;
+    ?>
+</div>
+<div>
+    <!--<pre>
+<?php //print_r($rappels);  ?>
+<?php //print_r($quotes);   ?>
+    </pre>-->
+    <table border="2px" style=" display: none">
+        <tr><td>Quote id</td><td>client_email</td></tr>
+        <?php foreach ($rappels as $rappel) { ?>
+            <tr><td><?php echo $rappel->quote_id; ?></td><td><?php echo $rappel->client_email; ?></td></tr>
+            <?php
+        }
+        //print_r(getdate());
+        ?>
+    </table>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th><?php echo lang('quote'); ?></th>
+                <th><?php echo lang('quote_nature'); ?></th>
+                <th><?php echo lang('client_name_tab'); ?></th>
+                <th><?php echo lang('client_email'); ?></th>
+                <th><?php echo lang('client_societe'); ?></th>
+
+                <th style=" display: none"><?php echo lang('options'); ?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            foreach ($rappels as $rappel) {
+                foreach ($quotes as $quote) {
+                    if ($rappel->quote_id == $quote->quote_id) {
+                        ?>
+                        <tr>
+                            <td>
+                                <?php echo $quote->quote_number ?>
+                            </td>
+                            <td>
+                                <?php echo $quote->quote_nature ?>
+                            </td>
+                            <td>
+                                <?php echo $quote->client_name . '&nbsp;' . $quote->client_prenom ?>&nbsp;
+                            </td>
+                            <td>
+                                <?php echo $quote->client_email ?>
+                            </td>
+                            <td>
+            <?php echo $quote->client_societe ?>
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <?php
+                    }
+                }
+            }
+            ?>
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+
+////script se trouve au déut de la page index  à voir
+
+
+<script>
+	$(function () {
+		body = "Bonjour,<br/><br/>";
+
+body += "J'espère que vous allez bien.<br/><br/>";
+
+body += "Je me permets de reprendre contact aujourd'hui avec vous afin de savoir si vous avez pris la décision concernant notre offre de prix pour la refonte de votre site.<br/><br/>";
+
+body += "Je peux vous apporter mes conseils et je serai vraiment ravie d'avoir un petit retour afin de connaître votre avis.<br/><br/>";
+
+body += "Je me propose de répondre à vos éventuelles questions si vous le désirez.<br/><br/><br/>";
+
+
+body += "Dans l'attente de notre prochain contact,<br/>";
+body += "Je vous passe mes sincères salutations.<br/><br/>";
+
+body += "Cordialement,";
+		<?php foreach($rappels as $rappel){//print_r( $rappel); ?>
+		
+			$.post("<?php echo site_url('quote_rappel/ajax/send_quote'); ?>", {
+				quote_id : <?php echo $rappel->quote_id;?>,
+				from_email : '<?php echo $this->session->userdata('user_mail'); ?>', //email user
+				from_name : '<?php echo $this->session->userdata('user_name'); ?>',//name user
+				pdf_template : '1', //Modèle de courriel: 
+				to : '<?php echo $rappel->client_email;?>',
+				subject : 'Re Devis _ (Service )',
+				
+				cc : '',
+				bcc : '',
+			}, function (data) {
+				var json_response = eval('(' + data + ')');
+				//self.data('typeahead').source = json_response;
+			});
+		<?php } ?>
+	});
+</script>

@@ -1,0 +1,4 @@
+#AuthName "superadmin"
+#AuthType Basic
+#AuthUserFile "/var/www/vhosts/erp.bison.tn/httpdocs/superadmin/.htpasswd"
+#Require valid-user

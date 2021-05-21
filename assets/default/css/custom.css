@@ -1,0 +1,10 @@
+/* =============================================================================
+   InvoicePlane
+   Custom Stylesheet
+
+   All changes made in this file will override the default styles.
+   ========================================================================== */
+   
+   .invoice-items table tr{
+		font-size:10px;
+   }

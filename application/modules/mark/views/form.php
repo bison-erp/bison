@@ -1,0 +1,43 @@
+<div id="headerbar-index">
+	<?php $this->layout->load_view('layout/alerts');?>
+</div>
+<div id="content">
+<form method="post" class="form-horizontal">
+	<div class="portlet light profile no-shabow bg-light-blue">
+		<div class="portlet-header">
+			<div class="portlet-title align-items-start flex-column">
+				<div class="caption font-dark-sunglo">
+					<span class="caption-subject bold med-caption dark">
+					<?php echo lang('new_mark'); ?></span><br/>
+					<span class="caption-subject text-bold small-caption muted">
+					<?php echo lang('add_edit_mark') ;?></span>
+				</div>
+			</div>
+			<div class="portlet-toolbar">
+				<?php $this->layout->load_view('layout/header_buttons');?>
+			</div>
+		</div>
+		<div class="portlet-body fournisseurs">
+			<div class="row card-row form-row">
+				<div class="col-lg-4 col-md-6 col-sm-12 col-xl-12">
+					<div class="form-group has-info">
+						<label for="form_control_1"><?php echo lang('designation');  ?><span class="text-danger">*</span></label>
+						<input value="<?php echo $this->mdl_mark->form_value('name_mark'); ?>" type="text" 
+						class="form-control form-control-md form-control-light" id="name_mark" name="name_mark">
+						<div class="form-control-focus"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="portlet-footer">
+			<div class="portlet-tool-btn">
+				        <div class="pull-right btn-group">
+							<a href="<?php echo base_url(); ?>mark/index" class="btn btn-md-size btn-primary">
+								<?php echo lang('view_supplier_marques'); ?>
+							</a>
+						</div>
+			</div>
+		</div>
+	</div>
+</form>
+</div>
